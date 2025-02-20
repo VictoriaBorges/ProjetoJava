@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import controller.ProdutoController;
+import model.Produto;
+import model.ProdutoPet;
+
 
 
 
@@ -13,8 +17,8 @@ public class Menu {
 	public static void main(String[] args) {
 		
 		Scanner leia = new Scanner(System.in);
-
-		// Variáveis de entrada de dados
+		 ProdutoController produtoController = new ProdutoController();
+	
 		int opcao=0, quantidade;
 		String nomeProduto;
 		float  valor;
@@ -69,31 +73,87 @@ public class Menu {
 					System.out.println("Quantidade em Estoque: ");
 					quantidade = leia.nextInt();
 					
+					 ProdutoPet novoProduto = new ProdutoPet(nomeProduto, valor, quantidade);
+	                    produtoController.cadastrar(novoProduto);
+	                    
 					System.out.println("Produto Cadastrado!!!");
 					System.out.println("Voce será redirecionado ao nosso menu principal");
-					keyPress();
-					break;
+					
+	                    keyPress();
+	                    
+	                    break;
 				case 2:
 					System.out.println(" Listar todos os Produtos ");
-
+					produtoController.listarTodos();
+					
+	
+					
 					keyPress();
 					break;
 				case 3:
 					System.out.println(" Buscar Produto: ");
-
+					System.out.println("Digite o nome do Produto:");
+					String nomeBusca = leia.nextLine();
+					Produto produtoEncontrado= produtoController.buscarProduto(nomeBusca);
+					 if (produtoEncontrado != null) {
+	                        System.out.println(produtoEncontrado);
+	                    } else {
+	                        System.out.println("Produto não encontrado.");
+	                    }
+					
 					keyPress();
 					break;
 					
 				case 4:
 					System.out.println("Atualizar Informações:");
+					
+					System.out.print("Digite o nome do produto a ser atualizado: ");
+	                    String nomeAtualiza = leia.nextLine();
 
+	                    System.out.print("Novo valor (R$): ");
+	                    float novoValor;
+	                    
+	                    try {
+	                        novoValor = leia.nextFloat();
+	                    } catch (InputMismatchException e) {
+	                        System.out.println(" Valor inválido.");
+	                        leia.nextLine();
+	                        break;
+	                    }
+
+	                    System.out.print("Nova quantidade em estoque: ");
+	                    int novaQuantidade;
+	                    try {
+	                        novaQuantidade = leia.nextInt();
+	                    } catch (InputMismatchException e) {
+	                        System.out.println(" Quantidade inválida.");
+	                        leia.nextLine();
+	                        break;
+	                    }
+	                        leia.nextLine();
+	                        if (produtoController.atualizar(nomeAtualiza, novoValor, novaQuantidade)) {
+	                            System.out.println("Produto atualizado com sucesso!");
+	                        } else {
+	                            System.out.println("Produto não encontrado.");
+	                        }
+	                        
 					keyPress();
 					break;
+	                    
 				case 5:
 					System.out.println(" Remover Produto: ");
+					 System.out.print("Digite o nome do produto a ser removido: ");
+					 String nomeRemover = leia.nextLine();
 
-					keyPress();
-					break;
+					    if (produtoController.removerProduto(nomeRemover)) {
+					        System.out.println("Produto removido com sucesso!");
+					    } else {
+					        System.out.println("Produto não encontrado.");
+					    }
+
+					    keyPress();
+					    break; 
+	                
 			}
 		}
 	}
@@ -119,7 +179,7 @@ public class Menu {
 
 		}
 	}
-	}
+}
 	
 
 		

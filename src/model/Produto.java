@@ -1,12 +1,11 @@
-package Ecommerce;
+package model;
 
 public abstract class Produto {
-	
 	private String nome;
-	private float valor;
-	private int quantidade;
+    private float valor;
+    private int quantidade;
 	
-	public Produto(String nome, float valor, int quantidade) {
+    public Produto(String nome, float valor, int quantidade) {
 		
 		this.nome = nome;
 		this.valor = valor;
@@ -36,6 +35,9 @@ public abstract class Produto {
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
-	
-
+	@Override
+    public String toString() {
+        return "Nome: " + nome + ", Preço: R$ " + valor + ", Estoque: " + quantidade;
+        
+	}
 }
