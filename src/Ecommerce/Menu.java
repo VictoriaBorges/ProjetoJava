@@ -14,7 +14,7 @@ import model.ProdutoPet;
 
 public class Menu {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception  {
 		
 		Scanner leia = new Scanner(System.in);
 		 ProdutoController produtoController = new ProdutoController();
